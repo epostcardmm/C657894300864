@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our 1st Anniversary 💖</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            /* Soft Purple Theme + Subtle Grid Background */
+            background-color: #f3e8ff;
+            background-image: 
+                linear-gradient(to right, rgba(168, 85, 247, 0.12) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(168, 85, 247, 0.12) 1px, transparent 1px),
+                linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 50%, #fae8ff 100%);
+            background-size: 28px 28px, 28px 28px, 100% 100%;
+            font-family: 'Times New Roman', Times, serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .container {
+            background: transparent;
+            backdrop-filter: none;
+            padding: 25px;
+            border-radius: 0;
+            box-shadow: none;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hidden {
+            display: none !important;
+        }
+        /* Normal Stickers */
+        .sticker {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            margin-bottom: 12px;
+        }
+        /* Small Sticker for Screen 3 */
+        .small-sticker {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            margin-bottom: 5px;
+        }
+        h2 {
+            color: #6b21a8;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+        p {
+            color: #581c87;
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        .btn {
+            background: linear-gradient(to right, #9333ea, #c084fc);
+            border: none;
+            color: white;
+            padding: 10px 26px;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(147, 51, 234, 0.35);
+            transition: 0.3s;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+            background: linear-gradient(to right, #7e22ce, #a855f7);
+        }
+        .btn-secondary {
+            background: #e9d5ff;
+            color: #581c87;
+            box-shadow: none;
+        }
+        .btn-secondary:hover {
+            background: #d8b4fe;
+        }
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        /* Loading Screen Styles */
+        .loading-wrapper {
+            width: 100%;
+            padding: 30px 0 10px 0;
+            position: relative;
+        }
+        .progress-bar-container {
+            width: 100%;
+            height: 14px;
+            background: rgba(255, 255, 255, 0.75);
+            border: 1px solid rgba(168, 85, 247, 0.25);
+            border-radius: 10px;
+            position: relative;
+            overflow: visible;
+            margin: 20px 0;
+            box-shadow: inset 0 2px 4px rgba(107, 33, 168, 0.08);
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(to right, #9333ea, #c084fc);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 2s linear;
+        }
+        /* 1. Moving Sticker */
+        .sticker-moving {
+            position: absolute;
+            top: -30px;
+            left: 0%;
+            transform: translateX(-50%);
+            transition: left 2s linear;
+        }
+        .sticker-moving img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+        /* 2. End Sticker */
+        .sticker-end {
+            position: absolute;
+            top: -30px;
+            right: 0%;
+            transform: translateX(50%);
+        }
+        .sticker-end img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            transition: transform 0.3s;
+        }
+        .sticker-end.pop-animation img {
+            transform: scale(1.3);
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            80% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .new-sticker-box {
+            animation: popIn 0.5s ease-in-out;
+            margin-top: 15px;
+        }
+
+        /* Realistic Letter Paper Style for Screen 3 */
+        .letter-box {
+            max-height: 220px;
+            overflow-y: auto;
+            text-align: left;
+            background: #fdfaff;
+            background-image: linear-gradient(to bottom, #fdfaff 0%, #f5ebff 100%);
+            padding: 16px 20px;
+            border-radius: 12px;
+            border: 1px solid #d8b4fe;
+            box-shadow: inset 0 0 15px rgba(147, 51, 234, 0.05), 0 4px 12px rgba(107, 33, 168, 0.08);
+            margin-bottom: 15px;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 1.1rem;
+            line-height: 1.65;
+            color: #3b0764;
+            position: relative;
+        }
+        
+        .letter-box::-webkit-scrollbar {
+            width: 4px;
+        }
+        .letter-box::-webkit-scrollbar-thumb {
+            background: #9333ea;
+            border-radius: 10px;
+        }
+
+        /* Cursor Effect for Typing */
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            background-color: #7e22ce;
+            vertical-align: middle;
+            animation: blink 0.7s infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        /* End of Text GIF */
+        .end-gif-container {
+            text-align: right;
+            margin-top: 15px;
+        }
+        .end-gif {
+            width: 45px;
+            height: 45px;
+            object-fit: contain;
+            cursor: pointer;
+            transition: 0.3s;
+            filter: drop-shadow(0 2px 4px rgba(107, 33, 168, 0.25));
+        }
+        .end-gif:hover {
+            transform: scale(1.15);
+        }
+
+        /* Modal Styles for Large GIF */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(59, 7, 100, 0.65);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.3s ease-in-out;
+        }
+        .modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal-content {
+            background: #fdfaff;
+            border: 1px solid #e9d5ff;
+            padding: 25px;
+            border-radius: 25px;
+            text-align: center;
+            width: 90%;
+            max-width: 360px;
+            box-shadow: 0 15px 40px rgba(88, 28, 135, 0.3);
+            animation: popIn 0.3s ease-in-out;
+        }
+        .large-gif {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            max-height: 60vh;
+            object-fit: contain;
+            margin-bottom: 15px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(107, 33, 168, 0.15);
+        }
+        .close-btn {
+            background: #e9d5ff;
+            border: none;
+            color: #581c87;
+            padding: 8px 22px;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-top: 5px;
+            transition: 0.2s;
+        }
+        .close-btn:hover {
+            background: #9333ea;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop>
+        <source src="https://www.image2url.com/r2/default/audio/1788346989205-2d1fb76b-7855-440f-a0c8-11a68eefa1a6.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Screen 1: Welcome Screen -->
+    <div class="container" id="screen-1">
+        <h2>Hey Baby, ကိုယ်မှာ မင်းအတွက် <br> Surprise တစ်ခုရှိတယ်</h2>
+        <p>
+            <img src="https://media.tenor.com/hlr3kptkdu4AAAAi/bubu-dudu.gif" class="sticker" alt="Panda Sticker"><br>
+            Click the next button!
+        </p>
+        <button class="btn" onclick="startLoading()">Next!! 💌✨</button>
+    </div>
+
+    <div class="container hidden" id="screen-loading">
+        <h2>Loading our sweet memories... ⏳</h2>
+        <div class="loading-wrapper">
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill" id="progressFill"></div>
+
+                <div class="sticker-moving" id="stickerMoving">
+                    <img src="https://media.tenor.com/fXhEKniUt9wAAAAj/bubu-dudu.gif" alt="Moving Sticker">
+                </div>
+
+                <!-- 2. End Sticker (Changes when completed) -->
+                <div class="sticker-end" id="stickerEndContainer">
+                    <img src="https://media.tenor.com/_YoesJxE1tYAAAAi/panda-%C3%B6p%C3%BCc%C3%BCk.gif" id="stickerEndImg" alt="End Sticker">
+                </div>
+            </div>
+        </div>
+
+        <div id="anniversaryInfoContainer" class="hidden new-sticker-box" style="margin-bottom: 20px;">
+            <h2 style="font-family: 'Times New Roman', Times, serif; font-size: 1.25rem; color: #6b21a8; margin: 0 0 8px 0; font-weight: 700;">
+                <span id="anniTitle"></span>
+            </h2>
+            <p style="font-family: 'Times New Roman', Times, serif; font-size: 1.2rem; color: #7e22ce; margin: 0 0 15px 0; font-weight: 700;">
+                <span id="anniSub"></span>
+            </p>
+            <button class="btn" onclick="goToScreen('screen-2')">Next 💌✨</button>
+        </div>
+    </div>
+
+    <div class="container hidden" id="screen-2">
+        <img src="https://media.tenor.com/DKTZwjflDSAAAAAi/bubu-dudu-sseeyall.gif" class="sticker" alt="Panda Sticker">
+        <h2>သဲသဲ ကိုကို့ ကိုယူမှာလားဟင် ?</h2>
+        <div class="button-group" style="margin-top: 20px;">
+            <button class="btn" onclick="openLetterScreen()">Yes</button>
+            <button class="btn btn-secondary" onclick="playSongAndSad()">No thank</button>
+        </div>
+    </div>
+
+    <!-- Screen Sad: No Thank You Clicked -->
+    <div class="container hidden" id="screen-sad">
+        <img src="https://media.tenor.com/RiQyOcZtLoIAAAAi/tkthao219-bubududu.gif" class="sticker" alt="Panda Sticker">
+        <h2>Awh... Let's try again >.<</h2>
+        <br>
+        <button class="btn" onclick="stopMusicAndGo('screen-2')">Again.?</button>
+    </div>
+
+    <div class="container hidden" id="screen-3">
+        <img src="https://media.tenor.com/r2mSqYQUKycAAAAj/raf-rafs.gif" class="small-sticker" alt="Panda Sticker">
+        <h2 style="margin-bottom: 5px;">Our Anniversary Letter 💌</h2>
+        <div class="letter-box">
+            <span style="font-weight: 700; color: #7e22ce; display: block; margin-bottom: 5px;">Hi my babyy</span>
+            <!-- Typing effect container -->
+            <span id="typewriterText"></span><span id="letterCursor" class="cursor"></span>
+            
+            <!-- End of Text GIF (Appears at the very bottom of the letter after typing) -->
+            <div class="end-gif-container hidden" id="endGifContainer">
+                <img src="https://media.tenor.com/_YoesJxE1tYAAAAi/panda-%C3%B6p%C3%BCc%C3%BCk.gif" class="end-gif" onclick="openModal()" alt="End GIF">
+            </div>
+        </div>
+        <button class="btn" onclick="resetAndGoHome()">Start Over 💖</button>
+    </div>
+
+    <div class="modal" id="gifModal">
+        <div class="modal-content">
+            <img src="https://i.ibb.co/F4Dy78D4/photo-2026-11-24-18-22-37.jpg" class="large-gif" alt="Large GIF"><br>
+            <button class="close-btn" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <!-- JavaScript for Navigation, Dynamic Anni, Music, Modal & Typing Effect -->
+    <script>
+        const fullLetterText = "I still can't believe how far we've come together! Even with the distance between us, every single moment has been the most meaningful time of my life. Being apart has never been easy, but knowing that our love is strong enough to bridge the miles makes every second worth it. 🫂\n\nHere's to many, many more years together.";
+
+        let letterTimeout;
+
+        function goToScreen(screenId) {
+            document.querySelectorAll('.container').forEach(el => el.classList.add('hidden'));
+            document.getElementById(screenId).classList.remove('hidden');
+        }
+
+        function openLetterScreen() {
+            goToScreen('screen-3');
+            startLetterTyping();
+        }
+
+        function playSongAndSad() {
+            const music = document.getElementById('bgMusic');
+            if (music) {
+                music.play().catch(error => {
+                    console.log("Audio play error:", error);
+                });
+            }
+            goToScreen('screen-sad');
+        }
+
+        function stopMusicAndGo(screenId) {
+            const music = document.getElementById('bgMusic');
+            if (music) {
+                music.pause();
+                music.currentTime = 0;
+            }
+            goToScreen(screenId);
+        }
+
+        function resetAndGoHome() {
+            clearTimeout(letterTimeout);
+            document.getElementById('typewriterText').innerText = '';
+            document.getElementById('endGifContainer').classList.add('hidden');
+            goToScreen('screen-1');
+        }
+
+        function typeWriter(text, elementId, speed, callback) {
+            let i = 0;
+            const element = document.getElementById(elementId);
+            element.innerText = '';
+            
+            function type() {
+                if (i < text.length) {
+                    element.innerText += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                } else if (callback) {
+                    callback();
+                }
+            }
+            type();
+        }
+
+        function calculateAnni(callback) {
+            const startDate = new Date(2024, 9, 25);
+            const today = new Date();
+
+            let years = today.getFullYear() - startDate.getFullYear();
+            let months = today.getMonth() - startDate.getMonth();
+            let days = today.getDate() - startDate.getDate();
+
+            if (days < 0) {
+                months--;
+                const prevMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+                days += prevMonth.getDate();
+            }
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            const isAnniDate = (today.getDate() === startDate.getDate());
+            let titleText = "";
+            let subText = "";
+
+            if (isAnniDate) {
+                if (years > 0 && months === 0) {
+                    titleText = `🎉 Happy ${years}${getOrdinal(years)} Anniversary, Baby! 🎉`;
+                    subText = `1 Year Completed Together ❤️`;
+                } else if (years > 0 && months > 0) {
+                    titleText = `🎉 Happy ${years} Year and ${months} Month${months > 1 ? 's' : ''}, Baby! 🎉`;
+                    subText = `Special Anniversary Today! 💖`;
+                } else {
+                    titleText = `🎉 Happy ${months} Month${months > 1 ? 's' : ''} Anniversary, Baby! 🎉`;
+                    subText = `Another month of loving you! 💖`;
+                }
+            } else {
+                titleText = `💖 Our Time Together 💖`;
+                let parts = [];
+                if (years > 0) parts.push(`${years} Year${years > 1 ? 's' : ''}`);
+                if (months > 0) parts.push(`${months} Month${months > 1 ? 's' : ''}`);
+                if (days > 0 || parts.length === 0) parts.push(`${days} Day${days > 1 ? 's' : ''}`);
+                subText = parts.join(', ') + ' together!';
+            }
+
+            typeWriter(titleText, 'anniTitle', 40, function() {
+                typeWriter(subText, 'anniSub', 30, callback);
+            });
+        }
+
+        function getOrdinal(n) {
+            let s = ["th", "st", "nd", "rd"],
+                v = n % 100;
+            return s[(v - 20) % 10] || s[v] || s[0];
+        }
+
+        function startLoading() {
+            document.querySelectorAll('.container').forEach(el => el.classList.add('hidden'));
+            document.getElementById('screen-loading').classList.remove('hidden');
+
+            const progressFill = document.getElementById('progressFill');
+            const stickerMoving = document.getElementById('stickerMoving');
+            const anniversaryInfoContainer = document.getElementById('anniversaryInfoContainer');
+            const stickerEndImg = document.getElementById('stickerEndImg');
+            const stickerEndContainer = document.getElementById('stickerEndContainer');
+
+            stickerEndImg.src = "https://media.tenor.com/UbiOjXKLkZIAAAAj/bubu-dudu.gif";
+            stickerMoving.style.display = 'block'; 
+            progressFill.style.width = '0%';
+            stickerMoving.style.left = '0%';
+            stickerEndContainer.classList.remove('pop-animation');
+            anniversaryInfoContainer.classList.add('hidden');
+
+            setTimeout(() => {
+                progressFill.style.width = '100%';
+                stickerMoving.style.left = '100%';
+            }, 100);
+
+            setTimeout(() => {
+                stickerMoving.style.display = 'none';
+                stickerEndImg.src = "https://media.tenor.com/oWTGv7XpHY4AAAAi/sseeyall-bubu-dudu.gif";
+                stickerEndContainer.classList.add('pop-animation');
+                anniversaryInfoContainer.classList.remove('hidden');
+                
+                calculateAnni();
+            }, 2100);
+            
+            setTimeout(() => {
+                stickerEndContainer.classList.remove('pop-animation');
+            }, 2500);
+        }
+
+        function startLetterTyping() {
+            clearTimeout(letterTimeout);
+            const textElement = document.getElementById('typewriterText');
+            const cursor = document.getElementById('letterCursor');
+            const gifContainer = document.getElementById('endGifContainer');
+            
+            textElement.innerHTML = '';
+            cursor.style.display = 'inline-block';
+            gifContainer.classList.add('hidden');
+
+            let index = 0;
+            const letterBox = document.querySelector('.letter-box');
+
+            function typeNextChar() {
+                if (index < fullLetterText.length) {
+                    let char = fullLetterText.charAt(index);
+                    if (char === '\n') {
+                        textElement.innerHTML += '<br>';
+                    } else {
+                        textElement.innerHTML += char;
+                    }
+                    index++;
+                    letterBox.scrollTop = letterBox.scrollHeight;
+                    letterTimeout = setTimeout(typeNextChar, 25);
+                } else {
+                    cursor.style.display = 'none';
+                    gifContainer.classList.remove('hidden');
+                }
+            }
+
+            typeNextChar();
+        }
+
+        function openModal() {
+            document.getElementById('gifModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('gifModal').classList.remove('active');
+        }
+    </script>
+</body>
+</html>
